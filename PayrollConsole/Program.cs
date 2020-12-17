@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 
 namespace PayrollConsole
 {
@@ -6,7 +7,7 @@ namespace PayrollConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello World!");                 
         }
     }
 }
