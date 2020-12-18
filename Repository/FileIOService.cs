@@ -18,7 +18,7 @@ namespace Repository
             _path = path;
         }
 
-        public List<Employee> LoadData()
+        public List<Employee> LoadDataToListEmployee()
         {
             List<Employee> ListEmployees = new List<Employee>();
 
@@ -43,9 +43,25 @@ namespace Repository
             return ListEmployees;
         }
 
-        //public void SaveData(List<Employee> e)
-        //{
+        public void AddDataToFileEmployee(string line)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(_path, true))
+                {
+                    sw.WriteLine(line);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
 
-        //}
+
+    //public void SaveData(List<Employee> e)
+    //{
+
+    //}
     }
 }

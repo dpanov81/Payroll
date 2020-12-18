@@ -13,7 +13,7 @@ namespace PayrollConsole
             Employee employee = new Employee(Input.InputName(), Input.InputSurname());     // При входе в программу вводим имя и фамилию       
 
             FileIOService file = new FileIOService("Список сотрудников");   // Для загрузки данных из файла, в констр. указываем название файла(файл лежит рядом с exe-шником)
-            listEmployees = file.LoadData();            // Загружаем список всех сотрудников из файла в лист
+            listEmployees = file.LoadDataToListEmployee();            // Загружаем список всех сотрудников из файла в лист
 
             foreach (var item in listEmployees)         // В листе ищем есть ли такой сотрудник (который ввел свои данные при входе в программу)
             {
@@ -25,21 +25,26 @@ namespace PayrollConsole
                 }
             }
 
-            if (employee.Role == null)                                   // Если не нашли, то выводим на экран что Васёк идет мимо
+            if (employee.Role == null)                                   // Если не нашли, то выводим на экран что нет такого сотрудника
                 Output.OutputSurname(employee.Name, employee.Surname);
-            else                                                        // Иначе смотрим какую Роль нашли                 
+            else                                                         // Иначе смотрим какую Роль нашли                 
             {
                 switch (employee.Role)
                 {
                     case "руководитель":
-                        Output.OutputMenuForLeader();
-                        break;
+                        Leader leader = new Leader(employee);
+                        while (true)
+                            leader.ActionsOfLeader(Output.OutputMenuForLeader());
+                        
                     case "сотрудник":
-                        Output.OutputMenuForSalaryEmployee();
-                        break;
+                        Staff staff = new Staff(employee);
+                        while(true)
+                            staff.ActionsOfStaff(Output.OutputMenuForStaff());                       
+
                     case "фрилансер":
-                        Output.OutputMenuForFreelancer();
-                        break;
+                        Freelancer freelancer = new Freelancer(employee);
+                        while(true)
+                            freelancer.ActionsOfFreelancer(Output.OutputMenuForFreelancer());                        
                 }
             }
         }

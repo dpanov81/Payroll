@@ -32,7 +32,7 @@ namespace PayrollConsole
 
             return surname;
         }
-        public static int InputMenuLeader()
+        public static byte InputMenuLeader()
         {
             string key = Console.ReadLine();
 
@@ -54,12 +54,12 @@ namespace PayrollConsole
                     return 5;
 
                 default:
-                    Console.WriteLine("Введите цифру от 1-5");
+                    Console.WriteLine("Введите цифру от 1 до 5");
                     return 6;
             }
         }
 
-        public static int InputMenuFreelancer()
+        public static byte InputMenuFreelancer()
         {
             string key = Console.ReadLine();
 
@@ -75,12 +75,12 @@ namespace PayrollConsole
                     return 3;
 
                 default:
-                    Console.WriteLine("Введите цифру от 1-3");
+                    Console.WriteLine("Введите цифру от 1 до 3");
                     return 4;
             }
         }
 
-        public static int InputMenuSalaryEmployee()
+        public static byte InputMenuStaff()
         {
             string key = Console.ReadLine();
 
@@ -96,7 +96,7 @@ namespace PayrollConsole
                     return 3;
 
                 default:
-                    Console.WriteLine("Введите цифру от 1-3");
+                    Console.WriteLine("Введите цифру от 1 до 3");
                     return 4;
             }
         }

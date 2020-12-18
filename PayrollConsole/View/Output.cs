@@ -33,40 +33,40 @@ namespace PayrollConsole
             Console.WriteLine("Ваша роль: " + role);
         }
 
-        static public void OutputMenuForLeader()
+        static public byte OutputMenuForLeader()
         {
             Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить сотрудника\n(2). Посмотреть отчет по всем сотрудникам\n(3). Посмотреть отчет по конкретному сотруднику\n(4). Добавить часы работы\n(5). Выход из программы");
 
-            int choice = Input.InputMenuLeader();
+            byte choice = Input.InputMenuLeader();
 
             while (choice == 6)
                 choice = Input.InputMenuLeader();
 
-            Console.WriteLine($"Вы выбрали {choice}");
+            return choice;
         }
 
-        static public void OutputMenuForFreelancer()
+        static public byte OutputMenuForFreelancer()
         {
             Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить часы работы\n(2). Посмотреть свои отработанные часы и зарплату за период\n(3). Выход из программы");
 
-            int choice = Input.InputMenuFreelancer();
+            byte choice = Input.InputMenuFreelancer();
 
             while (choice == 4)
                 choice = Input.InputMenuFreelancer();
 
-            Console.WriteLine($"Вы выбрали {choice}");
+            return choice;
         }
 
-        static public void OutputMenuForSalaryEmployee()
+        static public byte OutputMenuForStaff()
         {
             Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить часы работы\n(2). Посмотреть свои отработанные часы и зарплату за период\n(3). Выход из программы");
 
-            int choice = Input.InputMenuSalaryEmployee();
+            byte choice = Input.InputMenuStaff();
 
             while (choice == 4)
-                choice = Input.InputMenuSalaryEmployee();
+                choice = Input.InputMenuStaff();
 
-            Console.WriteLine($"Вы выбрали {choice}");
+            return choice;
         }
     }
 }
