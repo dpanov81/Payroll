@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Models
 {
     public class Leader : Employee
     {
+        public delegate void LeaderHandler();
+
+        public event LeaderHandler EventAddEmployeeToFile;
+        public event LeaderHandler EventExit;
+        public event LeaderHandler EventAddWorkHours;
+
         public Leader(string name, string surname) : base(name, surname)
         {
             Name = name;
@@ -23,7 +30,7 @@ namespace Models
             switch (action)
             {
                 case 1:
-                    AddEmployee();
+                    EventAddEmployeeToFile();
                     break;
 
                 case 2:
@@ -35,20 +42,15 @@ namespace Models
                     break;
 
                 case 4:
-                    AddWorkHours();
+                    EventAddWorkHours();
                     break;
 
                 case 5:
-                    ExitProgramm();
-                    break;                
+                    EventExit(); 
+                    break;             
             }
         }
-
-        private void AddEmployee()
-        {
-            Console.WriteLine("Добавляю сотрудника");
-        }
-
+        
         private void ViewReportForAllEmployees()
         {
             Console.WriteLine("Смотрю отчет по всем сотрудникам");

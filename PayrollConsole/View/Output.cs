@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,19 +22,23 @@ namespace PayrollConsole
             Console.WriteLine("Пожалуйста введите фамилию:");
         }
 
-        static public void OutputSurname(string name, string surname)
+        static public void EnterRole()
         {
-            Console.WriteLine("\nЗдравствуйте, " + surname + "!");
-            Console.WriteLine("Вас нет в списке сотрудников.");
+            Console.WriteLine("Пожалуйста введите должность:");
         }
 
-        static public void OutputSurnameAndRole(string name, string surname, string role)
+        static public void SurnameNotOnList(string surname)
+        {
+            Console.WriteLine("\nСотрудника с фамилией " + surname + " нет в списке сотрудников.");            
+        }
+
+        static public void SurnameAndRole(string surname, string role)
         {
             Console.WriteLine("\nЗдравствуйте, " + surname + "!");
             Console.WriteLine("Ваша роль: " + role);
         }
 
-        static public byte OutputMenuForLeader()
+        static public byte MenuForLeader()
         {
             Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить сотрудника\n(2). Посмотреть отчет по всем сотрудникам\n(3). Посмотреть отчет по конкретному сотруднику\n(4). Добавить часы работы\n(5). Выход из программы");
 
@@ -45,7 +50,7 @@ namespace PayrollConsole
             return choice;
         }
 
-        static public byte OutputMenuForFreelancer()
+        static public byte MenuForFreelancer()
         {
             Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить часы работы\n(2). Посмотреть свои отработанные часы и зарплату за период\n(3). Выход из программы");
 
@@ -57,7 +62,7 @@ namespace PayrollConsole
             return choice;
         }
 
-        static public byte OutputMenuForStaff()
+        static public byte MenuForStaff()
         {
             Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить часы работы\n(2). Посмотреть свои отработанные часы и зарплату за период\n(3). Выход из программы");
 
@@ -67,6 +72,22 @@ namespace PayrollConsole
                 choice = Input.InputMenuStaff();
 
             return choice;
+        }
+
+        static public Employee AddEmployee()
+        {            
+            Console.WriteLine("Добавление сотрудника:");
+            Employee employee = new Employee(Input.InputName(), Input.InputSurname(), Input.InputRole());
+
+            return employee;
+        }
+
+        static public void AddHoursWorked(Employee employee)
+        {
+            Console.WriteLine("Введите дату:");
+            DateTime date = 
+            Console.WriteLine("Введите количество отработанных часов:");
+            Console.WriteLine("Опишите задачу над которой работал сотрудник за указанное время:");
         }
     }
 }

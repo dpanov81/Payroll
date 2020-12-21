@@ -32,6 +32,20 @@ namespace PayrollConsole
 
             return surname;
         }
+
+        public static string InputRole()
+        {
+            string role;
+
+            do
+            {
+                Output.EnterRole();
+                role = Console.ReadLine();
+            }
+            while (!InputValidation.ValidationRole(role));
+
+            return role;
+        }
         public static byte InputMenuLeader()
         {
             string key = Console.ReadLine();
@@ -99,6 +113,12 @@ namespace PayrollConsole
                     Console.WriteLine("Введите цифру от 1 до 3");
                     return 4;
             }
+        }
+
+        public DateTime InputDate()
+        {
+            string date = Console.ReadLine();
+            DateTime d = date.ToD
         }
     }
 }

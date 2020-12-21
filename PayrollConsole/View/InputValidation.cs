@@ -34,5 +34,25 @@ namespace PayrollConsole
 
             return true;
         }
+
+        public static bool ValidationRole(string role)
+        {
+            switch (role)
+            {
+                case "руководитель":
+                    return true;                    
+
+                case "сотрудник":
+                    return true;                    
+
+                case "фрилансер":
+                    return true;
+
+                default:
+                    Console.WriteLine("Пожалуйста введите должность: руководитель, сотрудник или фрилансер");
+                    return false;
+            }
+        }
+
     }
 }

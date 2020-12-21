@@ -43,7 +43,7 @@ namespace Repository
             return ListEmployees;
         }
 
-        public void AddDataToFileEmployee(string line)
+        public void AddStringToFile(string line)
         {
             try
             {
