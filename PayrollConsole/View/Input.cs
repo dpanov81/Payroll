@@ -149,5 +149,11 @@ namespace PayrollConsole
 
             return h;   
         }
+
+        public static string InputTask()
+        {
+            string task = Console.ReadLine();
+            return task;
+        }
     }
 }

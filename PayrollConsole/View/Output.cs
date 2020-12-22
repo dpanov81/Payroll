@@ -86,8 +86,10 @@ namespace PayrollConsole
         {
             Console.WriteLine("Введите дату в формате дд.мм.гггг:");
         }
-        static public void AddHoursWorked(Employee employee)
+        static public string AddHoursWorked(Employee employee)
         {
+            string line;
+
             EnterDate();
             string date = Input.InputDate();
             if (!InputValidation.ValidationDate(date))
@@ -100,7 +102,8 @@ namespace PayrollConsole
                 }
                 while (!InputValidation.ValidationDate(date));
             }
-            Console.WriteLine(date);
+
+            line = date + "," + employee.Surname + ",";
 
             byte hours;
             do
@@ -110,9 +113,16 @@ namespace PayrollConsole
             } 
             while (hours > 24);
 
-            Console.WriteLine(hours);
+            string strHours = Convert.ToString(hours);
+            line += strHours + ",";
 
             Console.WriteLine("Опишите задачу над которой работал сотрудник за указанное время:");
+
+            string task = Input.InputTask();
+
+            line += task;           
+
+            return line;
         }
     }
 }

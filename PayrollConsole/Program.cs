@@ -57,22 +57,31 @@ namespace PayrollConsole
                 Output.SurnameNotOnList(employee.Surname);
             else
             {
+                FileIOService file1;
                 Console.WriteLine("Добавление обработанных часов ");
                 switch (employee.Role)
                 {
+
                     case "руководитель":
                         Console.WriteLine("записываем отработанные часы руководителю");
-                        Leader leader = new Leader(employee);
-                        Output.AddHoursWorked(employee);
-                        FileIOService file1 = new FileIOService("Список отработанных часов руководителей");
+                        //Leader leader = new Leader(employee);
+                         
+                        file1 = new FileIOService("Список отработанных часов руководителей");
+                        file1.AddStringToFile(Output.AddHoursWorked(employee));                        
                         break;
+
                     case "сотрудник":
                         Console.WriteLine("записываем отработанные часы сотруднику на зарплате");
-                        FileIOService file2 = new FileIOService("Список отработанных часов сотрудников на зарплате");
+                        //Staff staff = new Staff(employee);
+
+                        file1 = new FileIOService("Список отработанных часов сотрудников на зарплате");
+                        file1.AddStringToFile(Output.AddHoursWorked(employee));
                         break;
+
                     case "фрилансер":
                         Console.WriteLine("записываем отработанные часы фрилансеру");
-                        FileIOService file3 = new FileIOService("Список отработанных часов внештатных сотрудников");
+                        file1 = new FileIOService("Список отработанных часов внештатных сотрудников");
+                        file1.AddStringToFile(Output.AddHoursWorked(employee));
                         break;
                 }
             }
