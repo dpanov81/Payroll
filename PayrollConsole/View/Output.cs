@@ -29,7 +29,7 @@ namespace PayrollConsole
 
         static public void SurnameNotOnList(string surname)
         {
-            Console.WriteLine("\nСотрудника с фамилией " + surname + " нет в списке сотрудников.");            
+            Console.WriteLine("\nСотрудника с фамилией " + surname + " нет в списке сотрудников.");
         }
 
         static public void SurnameAndRole(string surname, string role)
@@ -75,18 +75,43 @@ namespace PayrollConsole
         }
 
         static public Employee AddEmployee()
-        {            
+        {
             Console.WriteLine("Добавление сотрудника:");
             Employee employee = new Employee(Input.InputName(), Input.InputSurname(), Input.InputRole());
 
             return employee;
         }
 
+        static public void EnterDate()
+        {
+            Console.WriteLine("Введите дату в формате дд.мм.гггг:");
+        }
         static public void AddHoursWorked(Employee employee)
         {
-            Console.WriteLine("Введите дату:");
-            DateTime date = 
-            Console.WriteLine("Введите количество отработанных часов:");
+            EnterDate();
+            string date = Input.InputDate();
+            if (!InputValidation.ValidationDate(date))
+            {
+                do
+                {
+                    Console.WriteLine("ОШИБКА ВВОДА: Введеная дата больше текущей!!!");
+                    EnterDate();
+                    date = Input.InputDate();
+                }
+                while (!InputValidation.ValidationDate(date));
+            }
+            Console.WriteLine(date);
+
+            byte hours;
+            do
+            {
+                Console.WriteLine("Введите количество отработанных часов от 1 до 24:");
+                hours = Input.InputNumberOfHoursWorked();
+            } 
+            while (hours > 24);
+
+            Console.WriteLine(hours);
+
             Console.WriteLine("Опишите задачу над которой работал сотрудник за указанное время:");
         }
     }

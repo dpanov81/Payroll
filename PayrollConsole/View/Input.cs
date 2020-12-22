@@ -115,10 +115,39 @@ namespace PayrollConsole
             }
         }
 
-        public DateTime InputDate()
+        public static string InputDate()
         {
-            string date = Console.ReadLine();
-            DateTime d = date.ToD
+            string strDate = Console.ReadLine();
+            DateTime date;
+
+            while (!DateTime.TryParse(strDate, out date))
+            {
+                Console.WriteLine("формат даты не верный");
+                Output.EnterDate();
+                strDate = Console.ReadLine();
+            }          
+            
+            strDate = date.ToShortDateString();                       
+
+            return strDate;
+        }
+
+        public static byte InputNumberOfHoursWorked()
+        {
+            string hours = Console.ReadLine();
+            byte h;
+
+            if (!byte.TryParse(hours, out h))
+            {                
+                do
+                {
+                    Console.WriteLine("ОШИБКА ВВОДА! Введите число:");
+                    hours = Console.ReadLine();
+                }
+                while (!byte.TryParse(hours, out h));
+            }           
+
+            return h;   
         }
     }
 }

@@ -63,11 +63,11 @@ namespace PayrollConsole
                     case "руководитель":
                         Console.WriteLine("записываем отработанные часы руководителю");
                         Leader leader = new Leader(employee);
-
+                        Output.AddHoursWorked(employee);
                         FileIOService file1 = new FileIOService("Список отработанных часов руководителей");
                         break;
                     case "сотрудник":
-                        Console.WriteLine("записываем отработанные часы сотруднику на зп");
+                        Console.WriteLine("записываем отработанные часы сотруднику на зарплате");
                         FileIOService file2 = new FileIOService("Список отработанных часов сотрудников на зарплате");
                         break;
                     case "фрилансер":

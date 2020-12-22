@@ -54,5 +54,15 @@ namespace PayrollConsole
             }
         }
 
+        public static bool ValidationDate(string strDate)
+        {
+            DateTime dateToday = DateTime.Today;
+            DateTime date = Convert.ToDateTime(strDate);
+                        
+            if (dateToday.CompareTo(date) >= 0)
+                return true;
+            else
+                return false;
+        }
     }
 }
