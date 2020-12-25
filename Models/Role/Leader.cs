@@ -10,6 +10,8 @@ namespace Models
         public delegate void LeaderHandler();
 
         public event LeaderHandler EventAddEmployeeToFile;
+        public event LeaderHandler EventViewReportForAllEmployees;
+        public event LeaderHandler EventViewEmployeeReport;
         public event LeaderHandler EventExit;
         public event LeaderHandler EventAddWorkHours;
 
@@ -34,11 +36,11 @@ namespace Models
                     break;
 
                 case 2:
-                    ViewReportForAllEmployees();
+                    EventViewReportForAllEmployees();
                     break;
 
                 case 3:
-                    ViewEmployeeReport();
+                    EventViewEmployeeReport();
                     break;
 
                 case 4:
@@ -50,26 +52,5 @@ namespace Models
                     break;             
             }
         }
-        
-        private void ViewReportForAllEmployees()
-        {
-            Console.WriteLine("Смотрю отчет по всем сотрудникам");
-        }
-
-        private void ViewEmployeeReport()
-        {
-            Console.WriteLine("Смотрю отчет по конкретному сотруднику");
-        }
-
-        private void AddWorkHours()
-        {
-            Console.WriteLine("Добавляю рабочие часы");
-        }
-                
-        private void ExitProgramm()
-        {
-            Console.WriteLine("Выхожу из программы");
-        }
-
     }
 }

@@ -46,17 +46,13 @@ namespace Models
             {
                 if (item.Name == this.Name && item.Surname == this.Surname)
                 {
-                    this.Role = item.Role;          // Если нашли, то присваиваем ему роль и выводим на экран
-                    //Output.OutputSurnameAndRole(employee.Name, employee.Surname, employee.Role);
+                    this.Role = item.Role;               // Если нашли, то присваиваем ему роль
+                    
                     return this;
                 }
             }
 
             return this;
-
-            //if (employee.Role == null)                                   // Если не нашли, то выводим на экран что нет такого сотрудника
-            //    Output.OutputSurname(employee.Name, employee.Surname);
-
         }
     }
 }
