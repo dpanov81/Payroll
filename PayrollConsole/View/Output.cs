@@ -134,9 +134,9 @@ namespace PayrollConsole
             {                
                 int index = listHoursWorked.Count - 1;          // Индекс последнего элемента в списке, там лежит общее кол-во отработанных часов сотрудника
                 int hours = int.Parse(listHoursWorked[index]);      
-                listHoursWorked.RemoveAt(listHoursWorked.Count - 1);        // Удаляем из списка последний элемент в котором содержится кол-во отработанных часов.
+                listHoursWorked.RemoveAt(index);        // Удаляем из списка последний элемент в котором содержится кол-во отработанных часов.
 
-                    Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}:");
+                    Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}\nДолжность: {employee.Role}");
                 foreach (var str in listHoursWorked)
                     Console.WriteLine(str);
 
