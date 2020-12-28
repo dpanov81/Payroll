@@ -86,6 +86,7 @@ namespace PayrollConsole
         {
             Console.WriteLine("Введите дату в формате дд.мм.гггг:");
         }
+
         static public string AddHoursWorked(Employee employee)
         {
             string line;
@@ -103,7 +104,7 @@ namespace PayrollConsole
                 while (!InputValidation.ValidationDate(date));
             }
 
-            line = date + "," + employee.Surname + ",";
+            line = date + "," + employee.Name + " " + employee.Surname + ",";
 
             byte hours;
             do
@@ -111,7 +112,7 @@ namespace PayrollConsole
                 Console.WriteLine("Введите количество отработанных часов от 1 до 24:");
                 hours = Input.InputNumberOfHoursWorked();
             } 
-            while (hours > 24);
+            while (hours > 24 && hours <= 0);
 
             string strHours = Convert.ToString(hours);
             line += strHours + ",";
@@ -123,6 +124,29 @@ namespace PayrollConsole
             line += task;           
 
             return line;
+        }
+
+        public static void EmployeeListOfHoursWorked(List<string> listHoursWorked, Employee employee)
+        {
+            if (listHoursWorked == null)
+                NoDataForThisEmployee();
+            else
+            {                
+                int index = listHoursWorked.Count - 1;          // Индекс последнего элемента в списке, там лежит общее кол-во отработанных часов сотрудника
+                int hours = int.Parse(listHoursWorked[index]);      
+                listHoursWorked.RemoveAt(listHoursWorked.Count - 1);        // Удаляем из списка последний элемент в котором содержится кол-во отработанных часов.
+
+                    Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}:");
+                foreach (var str in listHoursWorked)
+                    Console.WriteLine(str);
+
+                Console.WriteLine($"Итого: {hours} часов");
+            }
+        }
+
+        public static void NoDataForThisEmployee()
+        {
+            Console.WriteLine("По этому сотруднику нет данных.");
         }
     }
 }

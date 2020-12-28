@@ -32,7 +32,7 @@ namespace PayrollConsole
                     case "сотрудник":
                         Staff staff = new Staff(employee);
                         while(true)
-                            staff.ActionsOfStaff(Output.MenuForStaff());                       
+                            staff.ActionsOfStaff(Output.MenuForStaff());                        
 
                     case "фрилансер":
                         Freelancer freelancer = new Freelancer(employee);
@@ -42,6 +42,10 @@ namespace PayrollConsole
             }
         }
 
+        /// <summary>
+        /// Найти сотрудника в файле "Список сотрудников"
+        /// </summary>
+        /// <returns>объект класса Employee</returns>
         public static Employee FindEmployeeInFile()
         {
             Employee employee = new Employee(Input.InputName(), Input.InputSurname());     
@@ -59,6 +63,9 @@ namespace PayrollConsole
                 return employee;
         }
 
+        /// <summary>
+        /// Добавить сотрудника в файл "список сотрудников", вызов метода происходит из объекта класса Leader
+        /// </summary>
         public static void Leader_AddEmployeeToFile()
         {            
             Employee employee = new Employee(Input.InputName(), Input.InputSurname(), Input.InputRole());
@@ -72,11 +79,44 @@ namespace PayrollConsole
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Посмотреть отчет по конкретному сотруднику.
+        /// </summary>
         private static void Leader_ViewEmployeeReport()
         {
-            throw new NotImplementedException();
-        }        
+            Employee employee = new Employee();
+            employee = FindEmployeeInFile();
 
+            if (employee != null)
+            {
+                FileIOService file;
+                List<string> listHoursWorked = new List<string>(); 
+                switch (employee.Role)
+                {
+                    case "руководитель":
+                        file = new FileIOService("Список отработанных часов руководителей");
+                        listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
+                        Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                        break;
+
+                    case "сотрудник":
+                        file = new FileIOService("Список отработанных часов сотрудников на зарплате");
+                        listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
+                        Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                        break;
+
+                    case "фрилансер":
+                        file = new FileIOService("Список отработанных часов внештатных сотрудников");
+                        listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
+                        Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Добавление рабочих часов сотруднику, вызов метода происходит из объекта класса Leader
+        /// </summary>
         private static void Leader_AddWorkHours()
         {
             Console.WriteLine("Добавление часов сотруднику, для этого необходимо ввести имя и фамилию сотрудника");
@@ -89,21 +129,21 @@ namespace PayrollConsole
                 switch (employee.Role)
                 {
                     case "руководитель":
-                        Console.WriteLine("записываем отработанные часы руководителю");                        
+                        Console.WriteLine("Добавляем отработанные часы руководителю");                        
                          
                         file = new FileIOService("Список отработанных часов руководителей");
                         file.AddStringToFile(Output.AddHoursWorked(employee));                        
                         break;
 
                     case "сотрудник":
-                        Console.WriteLine("записываем отработанные часы сотруднику на зарплате");                        
+                        Console.WriteLine("Добавляем отработанные часы сотруднику на зарплате");                        
 
                         file = new FileIOService("Список отработанных часов сотрудников на зарплате");
                         file.AddStringToFile(Output.AddHoursWorked(employee));
                         break;
 
                     case "фрилансер":
-                        Console.WriteLine("записываем отработанные часы фрилансеру");
+                        Console.WriteLine("Добавляем отработанные часы фрилансеру");
 
                         file = new FileIOService("Список отработанных часов внештатных сотрудников");
                         file.AddStringToFile(Output.AddHoursWorked(employee));
