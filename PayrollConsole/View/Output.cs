@@ -128,15 +128,20 @@ namespace PayrollConsole
 
         public static void EmployeeListOfHoursWorked(List<string> listHoursWorked, Employee employee)
         {
-            if (listHoursWorked == null)
-                NoDataForThisEmployee();
+            if (listHoursWorked.Count == 0)
+            {
+                NoDataForThisEmployee(employee);
+            }
             else
-            {                
-                int index = listHoursWorked.Count - 1;          // Индекс последнего элемента в списке, там лежит общее кол-во отработанных часов сотрудника
-                int hours = int.Parse(listHoursWorked[index]);      
-                listHoursWorked.RemoveAt(index);        // Удаляем из списка последний элемент в котором содержится кол-во отработанных часов.
+            {
+                // Индекс последнего элемента в списке, там лежит общее кол-во отработанных часов сотрудника
+                int index = listHoursWorked.Count - 1;
+                int hours = int.Parse(listHoursWorked[index]);
 
-                    Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}\nДолжность: {employee.Role}");
+                // Удаляем из списка последний элемент в котором содержится кол-во отработанных часов.
+                listHoursWorked.RemoveAt(index);
+
+                Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}\nДолжность: {employee.Role}");
                 foreach (var str in listHoursWorked)
                     Console.WriteLine(str);
 
@@ -144,8 +149,9 @@ namespace PayrollConsole
             }
         }
 
-        public static void NoDataForThisEmployee()
+        public static void NoDataForThisEmployee(Employee employee)
         {
+            Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}\nДолжность: {employee.Role}");
             Console.WriteLine("По этому сотруднику нет данных.");
         }
     }

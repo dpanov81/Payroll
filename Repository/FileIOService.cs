@@ -96,22 +96,30 @@ namespace Repository
                 {
                     string line;
                     int hours = 0;
-                    while ((line = sr.ReadLine()) != null)          // Считываем строку из файла пока строки не закончатся.
-                    {                        
-                        string[] stringArray = line.Split(',');     // Делим строки на подстроки на основании запятой и записываем в массив строк.
+                    // Считываем строку из файла пока строки не закончатся.
+                    while ((line = sr.ReadLine()) != null)          
+                    {
+                        // Делим строки на подстроки на основании запятой и записываем в массив строк.
+                        string[] stringArray = line.Split(',');
 
-                        if (stringArray[1] != null)             // Если вторая строка не пустая (там лежит имя и фамилия в одной строке)
-                        {                            
-                            string[] stringArrayNameAndSurname = stringArray[1].Split(' '); // Делим вторую строку в массиве по пробелу и записываем в новый массив, теперь там 2 элемента (Имя и Фамилия)
+                        // Если вторая строка не пустая (там лежит имя и фамилия в одной строке)
+                        if (stringArray[1] != null)             
+                        {
+                            // Делим вторую строку в массиве по пробелу и записываем в новый массив, теперь там 2 элемента (Имя и Фамилия)
+                            string[] stringArrayNameAndSurname = stringArray[1].Split(' ');
 
-                            if (stringArrayNameAndSurname[0] == employee.Name && stringArrayNameAndSurname[1] == employee.Surname)      // Если имя и фамилия в массиве совпадают с именем и фамилией в объекте employee
+                            // Если имя и фамилия в массиве совпадают с именем и фамилией в объекте employee
+                            if (stringArrayNameAndSurname[0] == employee.Name && stringArrayNameAndSurname[1] == employee.Surname)      
                             {
-                                line = stringArray[0] + ", " + stringArray[2] + " час(а/ов)" + ", " + stringArray[3];  // Формируем строку отчета в формате: дд.мм.гггг, (часы) часов, что делал сотрудник
-                                
-                                listHoursWorked.Add(line);              // Добавляем строку отчета в лист строк                                
+                                // Формируем строку отчета в формате: дд.мм.гггг, (часы) часов, что делал сотрудник
+                                line = stringArray[0] + ", " + stringArray[2] + " час(а/ов)" + ", " + stringArray[3];
+
+                                // Добавляем строку отчета в лист строк                                
+                                listHoursWorked.Add(line);              
 
                                 if (stringArray[2] != null)
-                                    hours += int.Parse(stringArray[2]);         // Третий элемент массива - кол-во отработанных часов.
+                                    // Третий элемент массива - кол-во отработанных часов.
+                                    hours += int.Parse(stringArray[2]);         
                             }
                         }                        
                     }
@@ -119,7 +127,8 @@ namespace Repository
                     if (hours == 0)
                         return new List<string>();
 
-                    listHoursWorked.Add(hours.ToString());          // В последний элемент массива записываем кол-во отработанных часов.
+                    // В последний элемент массива записываем общее кол-во отработанных часов.
+                    listHoursWorked.Add(hours.ToString());          
 
                     return listHoursWorked;
                 }

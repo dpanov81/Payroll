@@ -94,13 +94,13 @@ namespace PayrollConsole
             listEmployees = LoadListOfEmployeesFromFile();
 
             FileIOService file;
-            List<string> listHoursWorked = new List<string>();
+            List<string> listHoursWorked = new List<string>(); ; 
 
             foreach (var employee in listEmployees)
             {
                 if (employee.Role == "руководитель")
                 {
-                    file = new FileIOService("Список отработанных часов руководителей");
+                    file = new FileIOService("Список отработанных часов руководителей");                    
                     listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
                     Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
                 }
@@ -110,7 +110,7 @@ namespace PayrollConsole
             {
                 if (employee.Role == "сотрудник")
                 {
-                    file = new FileIOService("Список отработанных часов сотрудников на зарплате");
+                    file = new FileIOService("Список отработанных часов сотрудников на зарплате");                    
                     listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
                     Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
                 }
@@ -120,8 +120,8 @@ namespace PayrollConsole
             {
                 if (employee.Role == "фрилансер")
                 {
-                    file = new FileIOService("Список отработанных часов внештатных сотрудников");
-                    listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
+                    file = new FileIOService("Список отработанных часов внештатных сотрудников");                    
+                    listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);                    
                     Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
                 }
             }
