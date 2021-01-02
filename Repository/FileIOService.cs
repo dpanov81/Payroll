@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Repository
+namespace Services
 {
     public class FileIOService
     {
@@ -50,6 +50,27 @@ namespace Repository
                 using (StreamWriter sw = new StreamWriter(_path, true))
                 {
                     sw.WriteLine(line);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Перезаписать список отработанных часов сотрудников в файл.
+        /// </summary>        
+        public void OverwriteListOfHoursWorkedToFile(List<string> listHoursWorked)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(_path, false))
+                {
+                    foreach (var line in listHoursWorked)
+                    {
+                        sw.WriteLine(line);
+                    }                    
                 }
             }
             catch (Exception e)

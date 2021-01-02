@@ -1,5 +1,5 @@
 ﻿using Models;
-using Repository;
+using Services;
 using System;
 using System.Collections.Generic;
 
@@ -144,7 +144,7 @@ namespace PayrollConsole
                     case "руководитель":
                         file = new FileIOService("Список отработанных часов руководителей");
                         listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
-                        Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                        Output.EmployeeListOfHoursWorked(listHoursWorked, employee);                        
                         break;
 
                     case "сотрудник":
@@ -171,6 +171,9 @@ namespace PayrollConsole
             Employee employee = new Employee();
             employee = FindEmployeeInFile();
 
+            List<string> listHoursWorked = new List<string>();
+            SortingService sortSrv = new SortingService();
+
             if (employee != null)            
             {
                 FileIOService file;                
@@ -180,7 +183,14 @@ namespace PayrollConsole
                         Console.WriteLine("Добавляем отработанные часы руководителю");                        
                          
                         file = new FileIOService("Список отработанных часов руководителей");
-                        file.AddStringToFile(Output.AddHoursWorked(employee));                        
+                        file.AddStringToFile(Output.AddHoursWorked(employee));
+                        
+                        listHoursWorked = file.LoadListOfHoursWorked();
+
+                        if (sortSrv.NeedSorting(listHoursWorked))
+                        {                            
+                            file.OverwriteListOfHoursWorkedToFile(sortSrv.SortingList(listHoursWorked));
+                        }
                         break;
 
                     case "сотрудник":
@@ -188,6 +198,13 @@ namespace PayrollConsole
 
                         file = new FileIOService("Список отработанных часов сотрудников на зарплате");
                         file.AddStringToFile(Output.AddHoursWorked(employee));
+
+                        listHoursWorked = file.LoadListOfHoursWorked();
+
+                        if (sortSrv.NeedSorting(listHoursWorked))
+                        {
+                            file.OverwriteListOfHoursWorkedToFile(sortSrv.SortingList(listHoursWorked));
+                        }
                         break;
 
                     case "фрилансер":
@@ -195,13 +212,20 @@ namespace PayrollConsole
 
                         file = new FileIOService("Список отработанных часов внештатных сотрудников");
                         file.AddStringToFile(Output.AddHoursWorked(employee));
+
+                        listHoursWorked = file.LoadListOfHoursWorked();
+
+                        if (sortSrv.NeedSorting(listHoursWorked))
+                        {
+                            file.OverwriteListOfHoursWorkedToFile(sortSrv.SortingList(listHoursWorked));
+                        }
                         break;
                 }
             }           
         }
 
         private static void Leader_Exit()
-        {
+        {            
             Console.WriteLine("Приложение завершено.");
             Environment.Exit(0);
         }        
