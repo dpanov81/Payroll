@@ -102,7 +102,7 @@ namespace PayrollConsole
                 {
                     file = new FileIOService("Список отработанных часов руководителей");                    
                     listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
-                    Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                    //Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
                 }
             }
 
@@ -112,7 +112,7 @@ namespace PayrollConsole
                 {
                     file = new FileIOService("Список отработанных часов сотрудников на зарплате");                    
                     listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
-                    Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                    //Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
                 }
             }
 
@@ -122,7 +122,7 @@ namespace PayrollConsole
                 {
                     file = new FileIOService("Список отработанных часов внештатных сотрудников");                    
                     listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);                    
-                    Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                   // Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
                 }
             }
         }
@@ -136,27 +136,34 @@ namespace PayrollConsole
             employee = FindEmployeeInFile();
 
             if (employee != null)
-            {
+            {   
                 FileIOService file;
-                List<string> listHoursWorked = new List<string>(); 
+                List<string> listHoursWorked = new List<string>();
+                ReportingService repService = new ReportingService(Output.ReportForPeriod(), Input.EnterDateForReport());                
+
                 switch (employee.Role)
                 {
                     case "руководитель":
                         file = new FileIOService("Список отработанных часов руководителей");
-                        listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
-                        Output.EmployeeListOfHoursWorked(listHoursWorked, employee);                        
+                        listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);                                             
+
+                        List<string> listReport = new List<string>();
+                        listReport = repService.CreateReport(listHoursWorked, employee);
+
+                        Output.EmployeeListOfHoursWorked(listReport, employee, repService);
+
                         break;
 
                     case "сотрудник":
                         file = new FileIOService("Список отработанных часов сотрудников на зарплате");
                         listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
-                        Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                        //Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
                         break;
 
                     case "фрилансер":
                         file = new FileIOService("Список отработанных часов внештатных сотрудников");
                         listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
-                        Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                        //Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
                         break;
                 }
             }

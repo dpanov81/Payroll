@@ -36,6 +36,7 @@ namespace Services
 
             return false;
         }
+
         /// <summary>
         /// Сортировка списка строк отработанных часов сотрудников по дате.        
         /// </summary>        
@@ -46,7 +47,6 @@ namespace Services
 
             DateTime date = new DateTime();
             DateTime nextDate = new DateTime();
-
 
             for (int i = 0; i < listOfHoursWorked.Count; i++)
             {
@@ -79,7 +79,7 @@ namespace Services
         /// Получает дату из строки.
         /// </summary>        
         /// <returns>DateTime</returns>
-        public DateTime GetDateFromString (string line)
+        private DateTime GetDateFromString (string line)
         {
             DateTime date = new DateTime();
 

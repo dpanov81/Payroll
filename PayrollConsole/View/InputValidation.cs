@@ -4,6 +4,9 @@ using System.Text;
 
 namespace PayrollConsole
 {
+    /// <summary>
+    /// Проверка вводных данных.
+    /// </summary>
     public static class InputValidation
     {
         public static bool ValidationNameOrSurname(string name)

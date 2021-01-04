@@ -1,10 +1,15 @@
 ﻿using Models;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace PayrollConsole
 {
+    /// <summary>
+    /// Обслуживающий класс.
+    /// Вывод информации на консоль.
+    /// </summary>
     public static class Output
     {
         static public void AttentionError()
@@ -92,14 +97,14 @@ namespace PayrollConsole
             string line;
 
             EnterDate();
-            string date = Input.InputDate();
+            string date = Input.EnterDate();
             if (!InputValidation.ValidationDate(date))
             {
                 do
                 {
                     Console.WriteLine("ОШИБКА ВВОДА: Введеная дата больше текущей!!!");
                     EnterDate();
-                    date = Input.InputDate();
+                    date = Input.EnterDate();
                 }
                 while (!InputValidation.ValidationDate(date));
             }
@@ -111,7 +116,7 @@ namespace PayrollConsole
             {
                 Console.WriteLine("Введите количество отработанных часов от 1 до 24:");
                 hours = Input.InputNumberOfHoursWorked();
-            } 
+            }
             while (hours > 24 && hours <= 0);
 
             string strHours = Convert.ToString(hours);
@@ -121,12 +126,12 @@ namespace PayrollConsole
 
             string task = Input.InputTask();
 
-            line += task;           
+            line += task;
 
             return line;
         }
 
-        public static void EmployeeListOfHoursWorked(List<string> listHoursWorked, Employee employee)
+        public static void EmployeeListOfHoursWorked(List<string> listHoursWorked, Employee employee, ReportingService repServ)
         {
             if (listHoursWorked.Count == 0)
             {
@@ -134,18 +139,15 @@ namespace PayrollConsole
             }
             else
             {
-                // Индекс последнего элемента в списке, там лежит общее кол-во отработанных часов сотрудника
-                int index = listHoursWorked.Count - 1;
-                int hours = int.Parse(listHoursWorked[index]);
+                if (repServ.period == 1)
+                {
+                    Console.WriteLine($"\n\nОтчёт по сотруднику: {employee.Name} {employee.Surname},\nДолжность: {employee.Role} \nза день {repServ.startDate.ToShortDateString()}\n");
+                    foreach (var str in listHoursWorked)
+                        Console.WriteLine(str);
 
-                // Удаляем из списка последний элемент в котором содержится кол-во отработанных часов.
-                listHoursWorked.RemoveAt(index);
-
-                Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}\nДолжность: {employee.Role}");
-                foreach (var str in listHoursWorked)
-                    Console.WriteLine(str);
-
-                Console.WriteLine($"Итого: {hours} часов");
+                    if (employee.Role == "руководитель")
+                        Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {10000} руб.");
+                }
             }
         }
 
@@ -153,6 +155,24 @@ namespace PayrollConsole
         {
             Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}\nДолжность: {employee.Role}");
             Console.WriteLine("По этому сотруднику нет данных.");
+        }
+
+        /// <summary>
+        /// Отчет за период.
+        /// </summary>
+        /// <returns>Byte Период за который необходимо сделать отчет. День, Неделя, Месяц.</returns>
+        public static byte ReportForPeriod()
+        {            
+            byte period;
+
+            do
+            {
+                Console.WriteLine("Введите период за который вы хотите увидеть отчет:\nДень - (Д)\nHеделя - (Н)\nМесяц - (М)");
+                period = Input.EnterReportForPeriod();
+            }
+            while (period == 4);
+
+            return period;
         }
     }
 }

@@ -4,6 +4,10 @@ using System.Text;
 
 namespace PayrollConsole
 {
+    /// <summary>
+    /// Обслуживающий класс.
+    /// Ввод информации с консоли.
+    /// </summary>
     public static class Input
     {
         public static string InputName()
@@ -115,7 +119,11 @@ namespace PayrollConsole
             }
         }
 
-        public static string InputDate()
+        /// <summary>
+        /// Ввод даты.
+        /// </summary>
+        /// <returns>дата в string</returns>
+        public static string EnterDate()
         {
             string strDate = Console.ReadLine();
             DateTime date;
@@ -130,6 +138,27 @@ namespace PayrollConsole
             strDate = date.ToShortDateString();                       
 
             return strDate;
+        }
+
+        /// <summary>
+        /// Ввод даты для начала отчета.
+        /// </summary>
+        /// <returns>DateTime</returns>
+        public static DateTime EnterDateForReport()
+        {
+            Console.WriteLine("Введите дату начала отчета в формате дд.мм.гггг:");
+
+            string strDate = Console.ReadLine();
+            DateTime startDate;
+
+            while (!DateTime.TryParse(strDate, out startDate))
+            {
+                Console.WriteLine("формат даты не верный");
+                Console.WriteLine("Введите дату начала отчета в формате дд.мм.гггг:");
+                strDate = Console.ReadLine();
+            }            
+
+            return startDate;
         }
 
         public static byte InputNumberOfHoursWorked()
@@ -154,6 +183,30 @@ namespace PayrollConsole
         {
             string task = Console.ReadLine();
             return task;
+        }
+
+        /// <summary>
+        /// Ввод периода отчета.
+        /// </summary>
+        /// <returns></returns>
+        public static byte EnterReportForPeriod()
+        {
+            string period = Console.ReadLine();
+
+            switch (period)
+            {
+                case "Д":
+                    return 1;
+
+                case "Н":
+                    return 2;
+
+                case "М":
+                    return 3;
+
+                default:                    
+                    return 4;
+            }
         }
     }
 }

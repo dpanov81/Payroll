@@ -70,7 +70,7 @@ namespace Services
                     foreach (var line in listHoursWorked)
                     {
                         sw.WriteLine(line);
-                    }                    
+                    }
                 }
             }
             catch (Exception e)
@@ -110,46 +110,22 @@ namespace Services
         /// <returns>Список строк.</returns>
         public List<string> LoadListOfWorkingHoursForSpecificEmployee(Employee employee)
         {
+            // Список строк отработанных часов по конкретному сотруднику.
             List<string> listHoursWorked = new List<string>();
             try
             {
                 using (StreamReader sr = new StreamReader(_path))
                 {
                     string line;
-                    int hours = 0;
+                    
                     // Считываем строку из файла пока строки не закончатся.
-                    while ((line = sr.ReadLine()) != null)          
+                    while ((line = sr.ReadLine()) != null)
                     {
-                        // Делим строки на подстроки на основании запятой и записываем в массив строк.
-                        string[] stringArray = line.Split(',');
+                        ReportLine reportLine = new ReportLine();
 
-                        // Если вторая строка не пустая (там лежит имя и фамилия в одной строке)
-                        if (stringArray[1] != null)             
-                        {
-                            // Делим вторую строку в массиве по пробелу и записываем в новый массив, теперь там 2 элемента (Имя и Фамилия)
-                            string[] stringArrayNameAndSurname = stringArray[1].Split(' ');
-
-                            // Если имя и фамилия в массиве совпадают с именем и фамилией в объекте employee
-                            if (stringArrayNameAndSurname[0] == employee.Name && stringArrayNameAndSurname[1] == employee.Surname)      
-                            {
-                                // Формируем строку отчета в формате: дд.мм.гггг, (часы) часов, что делал сотрудник
-                                line = stringArray[0] + ", " + stringArray[2] + " час(а/ов)" + ", " + stringArray[3];
-
-                                // Добавляем строку отчета в лист строк                                
-                                listHoursWorked.Add(line);              
-
-                                if (stringArray[2] != null)
-                                    // Третий элемент массива - кол-во отработанных часов.
-                                    hours += int.Parse(stringArray[2]);         
-                            }
-                        }                        
+                        if (reportLine.CompareNameAndSurname(line, employee))
+                            listHoursWorked.Add(line);                        
                     }
-
-                    if (hours == 0)
-                        return new List<string>();
-
-                    // В последний элемент массива записываем общее кол-во отработанных часов.
-                    listHoursWorked.Add(hours.ToString());          
 
                     return listHoursWorked;
                 }
@@ -159,7 +135,7 @@ namespace Services
                 Console.WriteLine(e.Message);
             }
 
-            return new List<string>();
+            return listHoursWorked;
         }
 
 
