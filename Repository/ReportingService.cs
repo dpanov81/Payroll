@@ -14,38 +14,45 @@ namespace Services
         public byte period;
         // Дата начала отчета.
         public DateTime startDate;
+        // Дата конца отчета.
+        public DateTime endDate;
         // Общее число отработанных часов.
         public int totalHoursWorked;
-        // Список строк для отчета.
+        // Общее число отработанных дней.
+        public int totalNumberOfDaysWorked;
+
         private List<string> _listReport;
         
-        public ReportingService(byte period, DateTime date)
+        public ReportingService(byte p, DateTime date)
         {
-            this.period = period;
+            period = p;
             startDate = date;
             _listReport = new List<string>();
         }        
 
         /// <summary>
-        /// Создание отчета.
+        /// Создание списка строк для отчета.
         /// </summary>
         /// <param name="listHoursWorked">Список часов отработанных сотрудником или сотрудниками.</param>
-        /// <returns>Отчет за период в списке строк.</returns>
-        public List<string>CreateReport(List<string> listHoursWorked, Employee employee)
+        /// <returns>Список строк для отчета.</returns>
+        public List<string>CreateReport(List<string> listHoursWorked)
         {
             if (period == 1)
-            {                
-                return DailyReport(listHoursWorked);
+            {
+                DailyReport(listHoursWorked);
+                return _listReport;
             }
             else
-                return WeeklyOrMonthlyReport(listHoursWorked, employee);
+            {
+                WeeklyOrMonthlyReport(listHoursWorked);
+                return _listReport;
+            }                
         }
 
         /// <summary>
-        /// Формирование строк списка дневного отчета по конкретному сотруднику.
-        /// </summary>        
-        /// <returns>Список строк дневного отчета по конкретному сотруднику.</returns>
-        private List<string> DailyReport(List<string> listHoursWorked)
+        /// Формирование строк списка отчета за день по конкретному сотруднику.
+        /// </summary>                
+        private void DailyReport(List<string> listHoursWorked)
         {
             ReportLine reportLine = new ReportLine();
 
@@ -56,14 +63,28 @@ namespace Services
                     totalHoursWorked += reportLine.GetHoursWorkedFromString(str);
                     _listReport.Add(CreateReportLine(str));
                 }
-            }            
-            return _listReport;
+            }  
         }
 
-        private List<string> WeeklyOrMonthlyReport(List<string> listHoursWorked, Employee employee)
+        /// <summary>
+        /// Формирование строк списка отчета за неделю или месяц по конкретному сотруднику.
+        /// </summary>                
+        private void WeeklyOrMonthlyReport(List<string> listHoursWorked)
         {
+            switch (period)
+            {
+                // Формируем список строк для отчета за неделю.
+                case 2:
+                    endDate = startDate.AddDays(6);
+                    SetLinesForPeriod(listHoursWorked);                    
+                    break;
 
-            return _listReport;
+                // Формируем список строк для отчета за месяц.
+                case 3:
+                    endDate = startDate.AddMonths(1);
+                    SetLinesForPeriod(listHoursWorked);
+                    break;
+            } 
         }
 
         /// <summary>
@@ -78,6 +99,27 @@ namespace Services
             string strReport = $"{dataFormString.Item1.ToShortDateString()}, {dataFormString.Item4} часов, {dataFormString.Item5}";
 
             return strReport;
+        }
+
+        /// <summary>
+        /// Установить строки за период в переменную _listReport.
+        /// </summary>        
+        private void SetLinesForPeriod(List<string> listHoursWorked)
+        {
+            // Считываемая дата.
+            DateTime readDate;
+            ReportLine reportLine = new ReportLine();
+
+            foreach (var line in listHoursWorked)
+            {
+                readDate = reportLine.GetDateFromString(line);
+
+                if (readDate >= startDate && readDate <= endDate)
+                {
+                    totalHoursWorked += reportLine.GetHoursWorkedFromString(line);
+                    _listReport.Add(CreateReportLine(line));
+                }
+            }
         }
     }
 }

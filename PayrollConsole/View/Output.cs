@@ -131,23 +131,59 @@ namespace PayrollConsole
             return line;
         }
 
-        public static void EmployeeListOfHoursWorked(List<string> listHoursWorked, Employee employee, ReportingService repServ)
+        /// <summary>
+        /// Формирование и вывод на консоль отчета по конкретному сотруднику за период.
+        /// </summary>        
+        public static void EmployeeListOfHoursWorked(List<string> listReport, Employee employee, ReportingService repServ)
         {
-            if (listHoursWorked.Count == 0)
+            if (listReport.Count == 0)
             {
                 NoDataForThisEmployee(employee);
             }
             else
             {
-                if (repServ.period == 1)
+                switch (repServ.period)
                 {
-                    Console.WriteLine($"\n\nОтчёт по сотруднику: {employee.Name} {employee.Surname},\nДолжность: {employee.Role} \nза день {repServ.startDate.ToShortDateString()}\n");
-                    foreach (var str in listHoursWorked)
-                        Console.WriteLine(str);
+                    // Отчет за день.
+                    case 1:
+                        Console.WriteLine($"\n\nОтчёт по сотруднику: {employee.Name} {employee.Surname}({employee.Role}) \nза день {repServ.startDate.ToShortDateString()}\n");
+                        foreach (var str in listReport)
+                            Console.WriteLine(str);
 
-                    if (employee.Role == "руководитель")
-                        Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {10000} руб.");
-                }
+                        switch (employee.Role)
+                        {
+                            case "руководитель":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {10000} руб.");
+                                break;
+                            case "сотрудник":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {6000} руб.");
+                                break;
+                            case "фрилансер":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {1000 * repServ.totalHoursWorked} руб.");
+                                break;
+                        }   
+                        break;
+
+                    // Отчет за неделю.
+                    case 2:
+                        Console.WriteLine($"\n\nОтчёт по сотруднику: {employee.Name} {employee.Surname}({employee.Role}) \nза неделю с {repServ.startDate.ToShortDateString()} по {repServ.endDate.ToShortDateString()}\n");
+                        foreach (var str in listReport)
+                            Console.WriteLine(str);
+
+                        if (employee.Role == "руководитель")
+                            Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {listReport.Count * 10000} руб.");
+                        break;
+
+                    // Отчет за месяц.
+                    case 3:
+                        Console.WriteLine($"\n\nОтчёт по сотруднику: {employee.Name} {employee.Surname}({employee.Role}) \nза месяц с {repServ.startDate.ToShortDateString()} по {repServ.endDate.ToShortDateString()}\n");
+                        foreach (var str in listReport)
+                            Console.WriteLine(str);
+
+                        if (employee.Role == "руководитель")
+                            Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {listReport.Count * 10000} руб.");                        
+                        break;                    
+                }                
             }
         }
 

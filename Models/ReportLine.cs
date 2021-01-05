@@ -5,7 +5,7 @@ using System.Text;
 namespace Models
 {
     /// <summary>
-    /// Класс вытаскивает из строки данных нужную информацию.    
+    /// Класс для работы с данными из строки отчета.    
     /// </summary>
     public class ReportLine
     {
@@ -17,8 +17,7 @@ namespace Models
 
         /// <summary>
         /// Получить данные из строки.
-        /// </summary>
-        /// <param name="line">Строка из списка отработанных часов сотрудника.</param>
+        /// </summary>        
         /// <returns>Данные из строки ввиде кортежа.</returns>
         public (DateTime, string, string, byte, string) GetDataFromString(string line)
         {        

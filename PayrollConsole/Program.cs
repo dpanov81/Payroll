@@ -137,33 +137,28 @@ namespace PayrollConsole
 
             if (employee != null)
             {   
-                FileIOService file;
-                List<string> listHoursWorked = new List<string>();
-                ReportingService repService = new ReportingService(Output.ReportForPeriod(), Input.EnterDateForReport());                
+                FileIOService file;                
+                ReportingService repService = new ReportingService(Output.ReportForPeriod(), Input.EnterDateForReport());
+                List<string> listReport = new List<string>();
 
                 switch (employee.Role)
                 {
                     case "руководитель":
                         file = new FileIOService("Список отработанных часов руководителей");
-                        listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);                                             
-
-                        List<string> listReport = new List<string>();
-                        listReport = repService.CreateReport(listHoursWorked, employee);
-
+                        listReport = repService.CreateReport(file.LoadListOfWorkingHoursForSpecificEmployee(employee));
                         Output.EmployeeListOfHoursWorked(listReport, employee, repService);
-
                         break;
 
                     case "сотрудник":
                         file = new FileIOService("Список отработанных часов сотрудников на зарплате");
-                        listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
-                        //Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                        listReport = repService.CreateReport(file.LoadListOfWorkingHoursForSpecificEmployee(employee));
+                        Output.EmployeeListOfHoursWorked(listReport, employee, repService);
                         break;
 
                     case "фрилансер":
                         file = new FileIOService("Список отработанных часов внештатных сотрудников");
-                        listHoursWorked = file.LoadListOfWorkingHoursForSpecificEmployee(employee);
-                        //Output.EmployeeListOfHoursWorked(listHoursWorked, employee);
+                        listReport = repService.CreateReport(file.LoadListOfWorkingHoursForSpecificEmployee(employee));
+                        Output.EmployeeListOfHoursWorked(listReport, employee, repService);
                         break;
                 }
             }
