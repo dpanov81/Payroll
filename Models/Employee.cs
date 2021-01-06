@@ -42,11 +42,13 @@ namespace Models
 
         public Employee FindEmployeeInList(List<Employee> listEmployees)
         {
-            foreach (var item in listEmployees)         // В листе ищем есть ли такой сотрудник (который ввел свои данные при входе в программу)
+            // В листе ищем есть ли такой сотрудник (который ввел свои данные при входе в программу)
+            foreach (var item in listEmployees)         
             {
                 if (item.Name == this.Name && item.Surname == this.Surname)
                 {
-                    this.Role = item.Role;               // Если нашли, то присваиваем ему роль
+                    // Если нашли, то присваиваем ему роль
+                    this.Role = item.Role;               
                     
                     return this;
                 }

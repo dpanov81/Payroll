@@ -6,7 +6,7 @@ using System.Text;
 namespace Services
 {
     /// <summary>
-    /// Служба отчетности, для формирования отчетов.
+    /// Служба отчетности, формирование данных для отчетов.
     /// </summary>
     public class ReportingService
     {
@@ -50,7 +50,7 @@ namespace Services
         }
 
         /// <summary>
-        /// Формирование строк списка отчета за день по конкретному сотруднику.
+        /// Формирование списка строк отчета за день по конкретному сотруднику.
         /// </summary>                
         private void DailyReport(List<string> listHoursWorked)
         {
@@ -67,7 +67,7 @@ namespace Services
         }
 
         /// <summary>
-        /// Формирование строк списка отчета за неделю или месяц по конкретному сотруднику.
+        /// Формирование списка строк отчета за неделю или месяц по конкретному сотруднику.
         /// </summary>                
         private void WeeklyOrMonthlyReport(List<string> listHoursWorked)
         {

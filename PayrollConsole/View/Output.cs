@@ -170,8 +170,18 @@ namespace PayrollConsole
                         foreach (var str in listReport)
                             Console.WriteLine(str);
 
-                        if (employee.Role == "руководитель")
-                            Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {listReport.Count * 10000} руб.");
+                        switch (employee.Role)
+                        {
+                            case "руководитель":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {listReport.Count * 10000} руб.");
+                                break;
+                            case "сотрудник":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {listReport.Count * 6000} руб.");
+                                break;
+                            case "фрилансер":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {repServ.totalHoursWorked * 1000} руб.");
+                                break;
+                        }                                            
                         break;
 
                     // Отчет за месяц.
@@ -180,8 +190,18 @@ namespace PayrollConsole
                         foreach (var str in listReport)
                             Console.WriteLine(str);
 
-                        if (employee.Role == "руководитель")
-                            Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {listReport.Count * 10000} руб.");                        
+                        switch (employee.Role)
+                        {
+                            case "руководитель":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {listReport.Count * 10000} руб.");
+                                break;
+                            case "сотрудник":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {listReport.Count * 6000} руб.");
+                                break;
+                            case "фрилансер":
+                                Console.WriteLine($"Итого: {repServ.totalHoursWorked} часов, заработанно: {repServ.totalHoursWorked * 1000} руб.");
+                                break;
+                        }                       
                         break;                    
                 }                
             }

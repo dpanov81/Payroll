@@ -16,6 +16,55 @@ namespace Services
             string path = Environment.CurrentDirectory + "\\" + fileName + ".csv";
 
             _path = path;
+
+            SortingService sortSrv = new SortingService();
+
+            if (!File.Exists(_path))
+            {
+                using (File.Create(_path));                
+                
+                RandomDataGeneratorService dataFileCreation = new RandomDataGeneratorService();
+
+                switch (fileName)
+                {
+                    case "Список сотрудников":                        
+                        SaveDataInFile(dataFileCreation.ListOfEmployees());
+                        break;
+
+                    case "Список отработанных часов руководителей":
+                        SaveDataInFile(sortSrv.SortingList(dataFileCreation.ListOfHoursWorkedByLeaders()));
+                        break;
+
+                    case "Список отработанных часов сотрудников на зарплате":
+                        SaveDataInFile(sortSrv.SortingList(dataFileCreation.ListOfEmployeesWorkedHours()));
+                        break;
+
+                    case "Список отработанных часов внештатных сотрудников":
+                        SaveDataInFile(sortSrv.SortingList(dataFileCreation.ListOfFreelancersWorkedHours()));
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Запись в пустой файл списка строк.
+        /// </summary>       
+        public void SaveDataInFile(List<string> listString)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(_path, false))
+                {
+                    foreach (var line in listString)
+                    {
+                        sw.WriteLine(line);
+                    }                    
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public List<Employee> LoadDataToListEmployee()
@@ -137,11 +186,5 @@ namespace Services
 
             return listHoursWorked;
         }
-
-
-        //public void SaveData(List<Employee> e)
-        //{
-
-        //}
     }
 }

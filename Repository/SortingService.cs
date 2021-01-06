@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Services
 {
+    /// <summary>
+    /// Класс сортировки списка по дате.
+    /// </summary>
     public class SortingService
     {
         /// <summary>
