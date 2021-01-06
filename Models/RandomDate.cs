@@ -13,7 +13,7 @@ namespace Models
         DateTime startDate;
         // Диапазон между датами.
         int range;
-        Random rnd;        
+        Random rnd;       
 
         public RandomDate()
         {
