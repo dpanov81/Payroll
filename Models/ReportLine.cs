@@ -58,7 +58,7 @@ namespace Models
             }
             return _date;
         }
-
+        
         /// <summary>
         /// Получить отработанные часы из строки.
         /// </summary>        
@@ -71,31 +71,7 @@ namespace Models
                 _workingHours = Convert.ToByte(stringArray[2]);
             }
             return _workingHours;
-        }
-
-        /// <summary>
-        /// Получить имя и фамилию из строки.
-        /// </summary>
-        /// <param name="line">Строка с данными.</param>
-        /// <returns>Имя и фамилия в виде кортежа.</returns>
-        //public (string, string) GetNameAndSurname(string line)
-        //{
-        //    if (!String.IsNullOrWhiteSpace(line))
-        //    {
-        //        string[] stringArray = line.Split(',');                
-
-        //        if (!String.IsNullOrWhiteSpace(stringArray[1]))
-        //        {
-        //            // Делим вторую строку в массиве по пробелу и записываем в новый массив, теперь там 2 элемента (Имя и Фамилия)
-        //            string[] stringArrayNameAndSurname = stringArray[1].Split(' ');
-
-        //            _name = stringArrayNameAndSurname[0];
-        //            _surname = stringArrayNameAndSurname[1];
-        //        }                
-        //    }
-
-        //    return (_name, _surname);
-        //}
+        }        
 
         /// <summary>
         /// Сравнить имя и фамилию из строки с именем и фамилией из объекта класс Employee.

@@ -209,8 +209,8 @@ namespace PayrollConsole
 
         public static void NoDataForThisEmployee(Employee employee)
         {
-            Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}\nДолжность: {employee.Role}");
-            Console.WriteLine("По этому сотруднику нет данных.");
+            Console.WriteLine($"\nОтчет по сотруднику {employee.Name} {employee.Surname}({employee.Role})");
+            Console.WriteLine("По этому сотруднику нет данных за указанный период.");
         }
 
         /// <summary>

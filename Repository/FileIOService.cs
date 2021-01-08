@@ -17,17 +17,25 @@ namespace Services
 
             _path = path;
 
+            FileExist(fileName);
+        }
+
+        /// <summary>
+        /// Проверяет существует ли файл, если нет создает необходимый файл.
+        /// </summary>
+        private void FileExist(string fileName)
+        {
             SortingService sortSrv = new SortingService();
 
             if (!File.Exists(_path))
             {
-                using (File.Create(_path));                
-                
+                using (File.Create(_path)) ;
+
                 RandomDataGeneratorService dataFileCreation = new RandomDataGeneratorService();
 
                 switch (fileName)
                 {
-                    case "Список сотрудников":                        
+                    case "Список сотрудников":
                         SaveDataInFile(dataFileCreation.ListOfEmployees());
                         break;
 

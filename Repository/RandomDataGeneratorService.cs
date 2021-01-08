@@ -279,7 +279,7 @@ namespace Services
                     if (date == nextDate)
                     {
                         listRandom.RemoveAt(nextItem);
-                        i--;
+                        i--;                        
                     }
                 }
             }
