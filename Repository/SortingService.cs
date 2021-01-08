@@ -116,7 +116,7 @@ namespace Services
                             // Складываем рабочие часы из двух строк.
                             data.Item4 += nextData.Item1;
                             // Создаем новую строку с задачами из текущей строки и следующей строки.
-                            data.Item5 = $"{data.Item5}, {nextData.Item2}";
+                            data.Item5 = $"{data.Item5} {nextData.Item2}";
 
                             // Создаем новую строку.
                             string newLine = repLine.CreateReportLine(data.Item1, data.Item2, data.Item3, data.Item4, data.Item5);

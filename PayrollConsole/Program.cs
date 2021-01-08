@@ -71,8 +71,15 @@ namespace PayrollConsole
         /// Посмотреть отчет за период, вызов метода происходит из объекта класса Staff.
         /// </summary>
         private static void Staff_EventViewReport(Staff staff)
-        {
-            throw new NotImplementedException();
+        {            
+            FileIOService file = new FileIOService("Список отработанных часов сотрудников на зарплате");
+            List<string> listReport = new List<string>();
+            ReportingService repService = new ReportingService(Output.ReportForPeriod(), Input.EnterDateForReport());
+            Employee employee = new Employee(staff.Name, staff.Surname, "сотрудник");
+
+            listReport = repService.CreateReport(file.LoadListOfWorkingHoursForSpecificEmployee((Employee)staff));
+
+            Output.EmployeeListOfHoursWorked(listReport, employee, repService);            
         }
 
         /// <summary>
