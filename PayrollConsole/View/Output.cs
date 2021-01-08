@@ -55,18 +55,6 @@ namespace PayrollConsole
             return choice;
         }
 
-        static public byte MenuForFreelancer()
-        {
-            Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить часы работы\n(2). Посмотреть свои отработанные часы и зарплату за период\n(3). Выход из программы");
-
-            byte choice = Input.InputMenuFreelancer();
-
-            while (choice == 4)
-                choice = Input.InputMenuFreelancer();
-
-            return choice;
-        }
-
         static public byte MenuForStaff()
         {
             Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить часы работы\n(2). Посмотреть свои отработанные часы и зарплату за период\n(3). Выход из программы");
@@ -78,6 +66,18 @@ namespace PayrollConsole
 
             return choice;
         }
+
+        static public byte MenuForFreelancer()
+        {
+            Console.WriteLine("\nВыберите желаемое действие:\n(1). Добавить часы работы\n(2). Посмотреть свои отработанные часы и зарплату за период\n(3). Выход из программы");
+
+            byte choice = Input.InputMenuFreelancer();
+
+            while (choice == 4)
+                choice = Input.InputMenuFreelancer();
+
+            return choice;
+        }        
 
         static public Employee AddEmployee()
         {

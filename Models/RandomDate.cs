@@ -30,7 +30,7 @@ namespace Models
 
         public DateTime Next()
         {
-            return startDate.AddDays(rnd.Next(range));
+            return startDate.AddDays(rnd.Next(range)).AddHours(0).AddMinutes(0).AddSeconds(0);
         }
     }
 }

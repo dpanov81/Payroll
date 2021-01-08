@@ -46,6 +46,48 @@ namespace Models
         }
 
         /// <summary>
+        /// Получить имя и фамилию из строки.
+        /// </summary>        
+        /// <returns>Данные из строки ввиде кортежа.</returns>
+        public (string, string) GetNameAndSurnameFromString(string line)
+        {
+            if (!String.IsNullOrWhiteSpace(line))
+            {
+                string[] stringArray = line.Split(',');                
+
+                if (!String.IsNullOrWhiteSpace(stringArray[1]))
+                {
+                    // Делим вторую строку в массиве по пробелу и записываем в новый массив, теперь там 2 элемента (Имя и Фамилия)
+                    string[] stringArrayNameAndSurname = stringArray[1].Split(' ');
+
+                    _name = stringArrayNameAndSurname[0];
+                    _surname = stringArrayNameAndSurname[1];
+                }
+            }
+            return (_name, _surname);
+        }
+
+        /// <summary>
+        /// Получить кол-во отработанных часов и задачу из строки.
+        /// </summary>        
+        /// <returns>Данные из строки ввиде кортежа.</returns>
+        public (byte, string) GetHoursAndTaskFromString(string line)
+        {
+            if (!String.IsNullOrWhiteSpace(line))
+            {
+                string[] stringArray = line.Split(',');                
+
+                if (!String.IsNullOrWhiteSpace(stringArray[2]))
+                    _workingHours = Convert.ToByte(stringArray[2]);
+
+                if (!String.IsNullOrWhiteSpace(stringArray[3]))
+                    _task = stringArray[3];
+            }
+
+            return (_workingHours, _task);
+        }
+
+        /// <summary>
         /// Получить дату из строки
         /// </summary>        
         /// <returns>Дата.</returns>
@@ -94,7 +136,11 @@ namespace Models
             }
             return false;
         }
-
+        
+        /// <summary>
+        /// Создает строку данных для записи в файл.
+        /// </summary>        
+        /// <returns>Строка данных.</returns>
         public string CreateReportLine(DateTime date, string name, string surname, byte workingHours, string task)
         {
             string line = $"{date.ToShortDateString()},{name} {surname},{workingHours},{task}";

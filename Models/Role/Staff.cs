@@ -6,6 +6,12 @@ namespace Models
 {
     public class Staff : Employee
     {
+        public delegate void StaffHandler(Staff staff);        
+
+        public event StaffHandler EventAddWorkHours;
+        public event StaffHandler EventViewReport;
+        public event StaffHandler EventExit;  
+
         public Staff(string name, string surname) : base(name, surname)
         {
             Name = name;
@@ -23,32 +29,17 @@ namespace Models
             switch (action)
             {
                 case 1:
-                    AddWorkHours();
+                    EventAddWorkHours(this);
                     break;
 
                 case 2:
-                    ViewHoursWorkedAndIncomeForPeriod();
+                    EventViewReport(this);
                     break;
 
                 case 3:
-                    ExitProgramm();
+                    EventExit(this);
                     break;
             }                
-        }
-
-        private void AddWorkHours()
-        {
-            Console.WriteLine("Добавляю свои отработанные часы");
-        }
-
-        private void ViewHoursWorkedAndIncomeForPeriod()
-        {
-            Console.WriteLine("Смотрю свои отработанные часы и доход за период");
-        }
-
-        private void ExitProgramm()
-        {
-            Console.WriteLine("Выхожу из программы");
-        }
+        }        
     }
 }
