@@ -6,6 +6,11 @@ namespace Models
 {
     public class Freelancer : Employee
     {
+        public delegate void FreelancerHandler(Freelancer freelancer);
+
+        public event FreelancerHandler EventAddWorkHours;
+        public event FreelancerHandler EventViewReport;
+        public event FreelancerHandler EventExit;
         public Freelancer(string name, string surname) : base (name, surname)
         {
             Name = name;
@@ -23,32 +28,17 @@ namespace Models
             switch (action)
             {
                 case 1:
-                    AddWorkHours();
+                    EventAddWorkHours(this);
                     break;
 
                 case 2:
-                    ViewHoursWorkedAndIncomeForPeriod();
+                    EventViewReport(this);
                     break;
 
                 case 3:
-                    ExitProgramm();
+                    EventExit(this);
                     break;
             }
-        }
-
-        private void AddWorkHours()
-        {
-            Console.WriteLine("Добавляю свои отработанные часы");
-        }
-
-        private void ViewHoursWorkedAndIncomeForPeriod()
-        {
-            Console.WriteLine("Смотрю свои отработанные часы и доход за период");
-        }
-
-        private void ExitProgramm()
-        {
-            Console.WriteLine("Выхожу из программы");
-        }
+        }        
     }
 }

@@ -67,5 +67,21 @@ namespace PayrollConsole
             else
                 return false;
         }
+
+        /// <summary>
+        /// Проверяет: дата меньше двух дней от текущей.
+        /// </summary>
+        /// <returns>True если дата меньше двух дней от текущей, иначе false.</returns>
+        public static bool DateIsLessThanTwoDaysFromCurrentDate(string strDate)
+        {
+            DateTime dateToday = DateTime.Today;
+            DateTime date = Convert.ToDateTime(strDate);
+            TimeSpan timeSpan = new TimeSpan(2, 0, 0, 0, 0);
+
+            if (dateToday.Subtract(timeSpan) > date)
+                return true;
+            else
+                return false;
+        }
     }
 }

@@ -11,39 +11,75 @@ namespace PayrollConsole
         {
             Employee employee = new Employee();
 
-            employee = FindEmployeeInFile();
-
-            if (employee.Role != null)
+            while (true)
             {
-                Output.SurnameAndRole(employee.Surname, employee.Role);
+                employee = FindEmployeeInFile();
 
-                switch (employee.Role)
+                if (employee.Role != null)
                 {
-                    case "руководитель":
-                        Leader leader = new Leader(employee);
-                        leader.EventAddEmployeeToFile += Leader_AddEmployeeToFile;
-                        leader.EventViewReportForAllEmployees += Leader_ViewReportForAllEmployees;
-                        leader.EventViewEmployeeReport += Leader_ViewEmployeeReport;
-                        leader.EventAddWorkHours += Leader_AddWorkHours;
-                        leader.EventExit += Leader_Exit;
-                        leader.ActionsOfLeader(Output.MenuForLeader());
-                        break;
+                    Output.SurnameAndRole(employee.Surname, employee.Role);
 
-                    case "сотрудник":
-                        Staff staff = new Staff(employee);
-                        staff.EventAddWorkHours += Staff_EventAddWorkHours;
-                        staff.EventViewReport += Staff_EventViewReport;
-                        //staff.EventExit += Leader_Exit;
-                        staff.ActionsOfStaff(Output.MenuForStaff());
-                        break;
+                    switch (employee.Role)
+                    {
+                        case "руководитель":
+                            Leader leader = new Leader(employee);
+                            leader.EventAddEmployeeToFile += Leader_AddEmployeeToFile;
+                            leader.EventViewReportForAllEmployees += Leader_ViewReportForAllEmployees;
+                            leader.EventViewEmployeeReport += Leader_ViewEmployeeReport;
+                            leader.EventAddWorkHours += Leader_AddWorkHours;
+                            leader.EventExit += Leader_Exit;
+                            leader.ActionsOfLeader(Output.MenuForLeader());
+                            break;
 
-                    case "фрилансер":
-                        Freelancer freelancer = new Freelancer(employee);
-                        while (true)
+                        case "сотрудник":
+                            Staff staff = new Staff(employee);
+                            staff.EventAddWorkHours += Staff_EventAddWorkHours;
+                            staff.EventViewReport += Staff_EventViewReport;
+                            staff.EventExit += Staff_EventExit;
+                            staff.ActionsOfStaff(Output.MenuForStaff());
+                            break;
+
+                        case "фрилансер":
+                            Freelancer freelancer = new Freelancer(employee);
+                            freelancer.EventAddWorkHours += Freelancer_EventAddWorkHours;
+                            freelancer.EventViewReport += Freelancer_EventViewReport;
+                            freelancer.EventExit += Freelancer_EventExit;
                             freelancer.ActionsOfFreelancer(Output.MenuForFreelancer());
+                            break;
+                    }
                 }
             }
         }
+
+        /// <summary>
+        /// Добавить отработанные часы, вызов метода происходит из объекта класса Freelancer.
+        /// </summary>        
+        private static void Freelancer_EventAddWorkHours(Freelancer freelancer)
+        {
+            List<string> listHoursWorked = new List<string>();
+            SortingService sortSrv = new SortingService();
+
+            FileIOService file = new FileIOService("Список отработанных часов внештатных сотрудников");
+
+            file.AddStringToFile(Output.AddHoursWorked((Employee)freelancer));
+
+            listHoursWorked = file.LoadListOfHoursWorked();
+
+            if (sortSrv.NeedSorting(listHoursWorked))
+            {
+                listHoursWorked = sortSrv.SortingList(listHoursWorked);
+            }
+
+            file.OverwriteListOfHoursWorkedToFile(sortSrv.FindDuplicateLines(listHoursWorked));
+        }
+
+        /// <summary>
+        /// Посмотреть отчет за период, вызов метода происходит из объекта класса Freelancer.
+        /// </summary>
+        private static void Freelancer_EventViewReport(Freelancer freelancer)
+        {
+            throw new NotImplementedException();
+        }        
 
         /// <summary>
         /// Добавить отработанные часы, вызов метода происходит из объекта класса Staff.
@@ -272,12 +308,22 @@ namespace PayrollConsole
                         break;
                 }
             }
-        }
+        }        
 
         private static void Leader_Exit()
         {
             Console.WriteLine("Приложение завершено.");
             Environment.Exit(0);
+        }
+
+        private static void Staff_EventExit(Staff staff)
+        {
+            Leader_Exit();
+        }
+
+        private static void Freelancer_EventExit(Freelancer freelancer)
+        {
+            Leader_Exit();
         }
     }
 }

@@ -109,6 +109,17 @@ namespace PayrollConsole
                 while (!InputValidation.ValidationDate(date));
             }
 
+            if (InputValidation.DateIsLessThanTwoDaysFromCurrentDate(date))
+            {
+                do
+                {
+                    Console.WriteLine("ОШИБКА ВВОДА: Введенная дата меньше текущей более чем на 2 дня!!!");
+                    EnterDate();
+                    date = Input.EnterDate();
+                }
+                while (InputValidation.DateIsLessThanTwoDaysFromCurrentDate(date));
+            }
+
             line = date + "," + employee.Name + " " + employee.Surname + ",";
 
             byte hours;
