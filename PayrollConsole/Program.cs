@@ -13,6 +13,8 @@ namespace PayrollConsole
 
             while (true)
             {
+                Output.Greeting();
+
                 employee = FindEmployeeInFile();
 
                 if (employee.Role != null)
@@ -78,7 +80,14 @@ namespace PayrollConsole
         /// </summary>
         private static void Freelancer_EventViewReport(Freelancer freelancer)
         {
-            throw new NotImplementedException();
+            FileIOService file = new FileIOService("Список отработанных часов внештатных сотрудников");
+            List<string> listReport = new List<string>();
+            ReportingService repService = new ReportingService(Output.ReportForPeriod(), Input.EnterDateForReport());
+            Employee employee = new Employee(freelancer.Name, freelancer.Surname, "фрилансер");
+
+            listReport = repService.CreateReport(file.LoadListOfWorkingHoursForSpecificEmployee((Employee)freelancer));
+
+            Output.EmployeeListOfHoursWorked(listReport, employee, repService);
         }        
 
         /// <summary>

@@ -12,6 +12,10 @@ namespace PayrollConsole
     /// </summary>
     public static class Output
     {
+        public static void Greeting()
+        {
+            Console.WriteLine("\n\n\nЗдравствуйте!!!\nВы в главном меню программы.");
+        }
         static public void AttentionError()
         {
             Console.WriteLine("\nВнимание!!! Ошибка Ввода!!!");
